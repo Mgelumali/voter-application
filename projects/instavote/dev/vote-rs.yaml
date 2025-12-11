@@ -1,30 +1,34 @@
-apiVersion: xxx
-kind: xxx
+apiVersion: apps/v1
+kind: ReplicaSet
 metadata:
-  name: xxx 
+  name: xxx
   labels:
     role: vote
 spec:
-  xxx 
-  template: 
+  replicas: 4
+  selector:
+    matchLabels:
+      app: python
+      role: vote
+      version: v1
+    matchExpressions:
+      - key: version
+        operator: Exists
+  template:
     metadata:
-      name: vote 
-      labels: 
-        app: python 
-        role: vote 
-        version: v1 
+      name: vote
+      labels:
+        app: python
+        role: vote
+        version: v1
     spec:
-      containers: 
-        - name: app 
-          image: schoolofdevops/vote:v1 
+      containers:
+        - name: app
+          image: schoolofdevops/vote:v1
           resources:
             requests:
               memory: "64Mi"
               cpu: "50m"
-            limits: 
+            limits:
               memory: "128Mi"
               cpu: "250m"
-
-
-
-
